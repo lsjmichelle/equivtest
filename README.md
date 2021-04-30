@@ -1,6 +1,6 @@
 ## equivtest
 Equivalence testing
 
-[Check out my equivalence testing showcase!](https://equivtest.netlify.app)
+<a href="https://equivtest.netlify.app" target="_blank">Check out my equivalence testing showcase!</a>
 
 ![close-enough](https://media.giphy.com/media/xT5LMwpCfKO1oDIuOs/giphy.gif)
