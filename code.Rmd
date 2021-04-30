@@ -1,0 +1,260 @@
+---
+title: 'Equivalence testing'
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+# knitr::opts_knit$set(global.par=TRUE)
+```
+
+```{r klippy, echo=FALSE}
+klippy::klippy(
+  position = c('top', 'right'),
+  tooltip_message = 'Click to copy',
+  tooltip_success = 'Done'
+)
+```
+
+## Getting started
+
+### Install packages
+
+Install required packages from CRAN and GitHub.
+
+```{r, eval=FALSE}
+install.packages(c('TOSTER', 'ecoCopula', 'mvabund', 'devtools', 'psych'))
+devtools::install_github('lsjmichelle/ecopower@2b3d7fe')
+```
+
+### Load packages
+```{r, message=FALSE, warning=FALSE}
+library(TOSTER)
+library(ecopower)
+library(ecoCopula)
+library(mvabund)
+```
+
+### Load data
+
+The `crayweed` dataset was collected over a period of seven time points and
+contains the counts of 20 fish species at 27 sites - 16 reference sites and
+11 restored sites.
+
+```{r}
+data('crayweed', package='ecopower')
+abund = crayweed$abund
+X = crayweed$X
+```
+
+## TOSTER
+
+### Species richness data
+
+```{r}
+data = data.frame(richness = rowSums(abund>0))
+data$treatment = X$treatment
+data$treatment = factor(data$treatment, levels=c('restored', 'reference'))
+head(data)
+```
+
+### Testing for equivalence
+
+```{r, message=FALSE}
+dataTOSTtwo(
+  data, deps='richness', group='treatment',
+  low_eqbound=-0.8, high_eqbound=0.8,
+  var_equal=TRUE, desc=TRUE, plots=TRUE
+)
+```
+
+We do not find evidence of similarity. The confidence interval (CI)
+does not fall between the lower and upper bounds.
+
+### Testing for non-inferiority
+
+```{r, message=FALSE}
+dataTOSTtwo(
+  data, deps='richness', group='treatment',
+  low_eqbound=-0.8, high_eqbound=Inf,
+  var_equal=TRUE, desc=TRUE, plots=TRUE
+)
+```
+
+The result is inconclusive. To conclude that restored is not inferior to reference,
+the CI should be above the lower bound.
+
+### More examples
+
+Our study lacks power at an effect size of 0.8.
+
+```{r}
+powerTOSTtwo(alpha=0.05, N=14, low_eqbound_d=-0.8, high_eqbound_d=0.8)
+```
+
+When designing an experiment, collecting more samples will improve the
+chances of detecting an effect size of interest.
+
+```{r}
+powerTOSTtwo(alpha=0.05, statistical_power=0.8, low_eqbound_d=-0.8, high_eqbound_d=0.8)
+```
+<br>
+`TOSTER` allows us to combine equivalence test and classical test. To do so, we require
+some descriptive statistics. There are many ways to compute these statistics.
+Here we use the `psych` package to display the descriptive statistics in a table.
+
+```{r}
+psych::describeBy(
+  richness~treatment, mat=TRUE, digits=4, data=data
+)[,c('group1', 'n', 'mean', 'sd')]
+```
+
+Then we input the values into the `TOSTtwo` function.
+```{r}
+TOSTtwo(
+  m1=8.9091, m2=9.9375,
+  sd1=2.0226, sd2=1.6919,
+  n1=11, n2=16,
+  low_eqbound_d=-0.8, high_eqbound_d=0.8,
+  alpha=0.05, var.equal=TRUE
+)
+```
+
+## ecopower
+
+### Multivariate abundance data
+
+```{r}
+cbind(abund[1:6,2:4], head(X))
+```
+
+### Multivariate equivalence test
+
+Fit a predictive model using the `manyglm` function.
+```{r}
+fit = manyglm(abund ~ time + treatment, family='negative.binomial', data=X)
+```
+
+Fit a Gaussian copula factor analytic model.
+```{r}
+fit.cord = cord(fit)
+```
+
+Specify the increasers and decreasers.
+```{r}
+increasers = c(
+  'Aplodactylus.lophodon', 'Atypichthys.strigatus', 'Cheilodactylus.fuscus',
+  'Pictilabrus.laticlavius'
+)
+
+decreasers = c(
+  'Acanthurus.nigrofuscus', 'Chromis.hypsilepis', 'Parma.microlepis',
+  'Pempheris.compressa', 'Scorpis.lineolatus', 'Trachinops.taeniatus'
+)
+```
+
+Generate matrix of effect sizes based on effect size of interest.
+```{r}
+effect_mat = effect_alt(fit, effect_size=1.5, increasers, decreasers, term='treatment')
+```
+
+Perform a multivariate equivalence test.
+```{r, eval=TRUE}
+equivtest(fit.cord, coeffs=effect_mat)
+```
+
+There is no evidence of similarity between the reference and restored sites
+(p-value > 0.1). This does not necessarily mean that the difference between
+the treatment levels is greater than a factor of 1.5 - another explanation is
+that we might not have enough information in the data to accurately estimate
+the effect size.
+
+## TL;DR (show me the code)
+```{r, eval=FALSE}
+# Install required packages from CRAN and GitHub.
+install.packages(c('TOSTER', 'ecoCopula', 'mvabund', 'devtools', 'psych'))
+devtools::install_github('lsjmichelle/ecopower@2b3d7fe')
+
+# Load packages
+library(TOSTER)
+library(ecopower)
+library(ecoCopula)
+library(mvabund)
+
+# Load data 
+data('crayweed', package='ecopower')
+abund = crayweed$abund
+X = crayweed$X
+
+# TOSTER
+
+# Species richness data
+data = data.frame(richness = rowSums(abund>0))
+data$treatment = X$treatment
+data$treatment = factor(data$treatment, levels=c('restored', 'reference'))
+head(data)
+
+# Testing for equivalence
+dataTOSTtwo(
+  data, deps='richness', group='treatment',
+  low_eqbound=-0.8, high_eqbound=0.8,
+  var_equal=TRUE, desc=TRUE, plots=TRUE
+)
+
+# Testing for non-inferiority
+dataTOSTtwo(
+  data, deps='richness', group='treatment',
+  low_eqbound=-0.8, high_eqbound=Inf,
+  var_equal=TRUE, desc=TRUE, plots=TRUE
+)
+
+# More examples
+
+powerTOSTtwo(alpha=0.05, N=14, low_eqbound_d=-0.8, high_eqbound_d=0.8)
+
+powerTOSTtwo(alpha=0.05, statistical_power=0.8, low_eqbound_d=-0.8, high_eqbound_d=0.8)
+
+# Descriptive statistics
+psych::describeBy(
+  richness~treatment, mat=TRUE, digits=4, data=data
+)[,c('group1', 'n', 'mean', 'sd')]
+
+TOSTtwo(
+  m1=8.9091, m2=9.9375,
+  sd1=2.0226, sd2=1.6919,
+  n1=11, n2=16,
+  low_eqbound_d=-0.8, high_eqbound_d=0.8,
+  alpha=0.05, var.equal=TRUE
+)
+
+# ecopower - Multivariate equivalence test
+
+# Multivariate abundance data
+cbind(abund[1:6,2:4], head(X))
+
+# Fit a predictive model using the manyglm function
+fit = manyglm(abund ~ time + treatment, family='negative.binomial', data=X)
+
+# Fit a Gaussian copula factor analytic model
+fit.cord = cord(fit)
+
+# Specify the increasers and decreasers
+increasers = c(
+  'Aplodactylus.lophodon', 'Atypichthys.strigatus', 'Cheilodactylus.fuscus',
+  'Pictilabrus.laticlavius'
+)
+
+decreasers = c(
+  'Acanthurus.nigrofuscus', 'Chromis.hypsilepis', 'Parma.microlepis',
+  'Pempheris.compressa', 'Scorpis.lineolatus', 'Trachinops.taeniatus'
+)
+
+# Generate matrix of effect sizes based on effect size of interest
+effect_mat = effect_alt(fit, effect_size=1.5, increasers, decreasers, term='treatment')
+
+# Perform a multivariate equivalence test
+equivtest(fit.cord, coeffs=effect_mat)
+```

@@ -1,0 +1,19 @@
+---
+title: 'Equivalence testing - is there evidence of similarity?'
+author: '[Michelle Lim](https://github.com/lsjmichelle){target="_blank"} for [Eco-Stats Lab](http://eco-stats.blogspot.com/){target="_blank"}, 30 Apr 2021'
+output: html_document
+---
+
+Traditional hypothesis testing approaches, such as ANOVA or a t-test, look for evidence of a difference among groups. But what if the objective is to test for evidence of similarity?  An example in ecology is ecological restoration, where the objective is to restore sites to a point where they are similar to control sites. The analysis goal, rather than being to look for evidence that the restored sites are different from controls, should be to show evidence that they are similar to the controls.
+
+Equivalence testing is a procedure that can be used for this sort of problem. The method originated in pharmaceutical research, to show that new drugs perform no worse than existing treatments. We will introduce equivalence testing using the R package `TOSTER` and demonstrate how it can be used to assess the effects of crayweed restoration on the fish assemblages along the coastline of Sydney, Australia. My PhD research extends equivalence testing procedures to handle multivariate abundance data in ecology.
+
+[Presentation slides](slides.html){target="_blank"}
+
+[R Notebook and code](code.html)
+
+<div class="tooltip">
+  <p style="font-size:13px">Feedback or questions? Email me!
+    <span class="tooltiptext">michelle.lim[at]unsw.edu.au</span
+  </p>
+</div>

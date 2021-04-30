@@ -1,0 +1,21 @@
+name: 'Eco-Stats Lab - Equivalence testing'
+navbar:
+  title: 'Equivtest'
+  left:
+    - text: 'Home'
+      icon: fa-home
+      href: index.html 
+    - text: 'R Notebook'
+      icon: fa-code
+      href: code.html
+    - text: 'Slides'
+      icon: fa-video
+      href: slides.html
+output_dir: '.'
+output:
+  html_document:
+    theme: paper
+    css: lab/styles.css
+    includes:
+      in_header: header.html
+      after_body: footer.html

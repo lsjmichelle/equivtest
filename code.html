@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Equivalence testing</title>
+
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link rel="shortcut icon" href="images/ffish-icon.png" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="lab/styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Equivtest</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fas fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="code.html">
+    <span class="fas fa-code"></span>
+     
+    R Notebook
+  </a>
+</li>
+<li>
+  <a href="slides.html">
+    <span class="fas fa-video"></span>
+     
+    Slides
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Equivalence testing</h1>
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', 'auto', '1', 'Click to copy', 'Done');
+</script>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
+<div id="install-packages" class="section level3">
+<h3>Install packages</h3>
+<p>Install required packages from CRAN and GitHub.</p>
+<pre class="r"><code>install.packages(c(&#39;TOSTER&#39;, &#39;ecoCopula&#39;, &#39;mvabund&#39;, &#39;devtools&#39;, &#39;psych&#39;))
+devtools::install_github(&#39;lsjmichelle/ecopower@2b3d7fe&#39;)</code></pre>
+</div>
+<div id="load-packages" class="section level3">
+<h3>Load packages</h3>
+<pre class="r"><code>library(TOSTER)
+library(ecopower)
+library(ecoCopula)
+library(mvabund)</code></pre>
+</div>
+<div id="load-data" class="section level3">
+<h3>Load data</h3>
+<p>The <code>crayweed</code> dataset was collected over a period of seven time points and contains the counts of 20 fish species at 27 sites - 16 reference sites and 11 restored sites.</p>
+<pre class="r"><code>data(&#39;crayweed&#39;, package=&#39;ecopower&#39;)
+abund = crayweed$abund
+X = crayweed$X</code></pre>
+</div>
+</div>
+<div id="toster" class="section level2">
+<h2>TOSTER</h2>
+<div id="species-richness-data" class="section level3">
+<h3>Species richness data</h3>
+<pre class="r"><code>data = data.frame(richness = rowSums(abund&gt;0))
+data$treatment = X$treatment
+data$treatment = factor(data$treatment, levels=c(&#39;restored&#39;, &#39;reference&#39;))
+head(data)</code></pre>
+<pre><code>##   richness treatment
+## 1        7 reference
+## 2        5  restored
+## 3        9  restored
+## 4       13 reference
+## 5        9 reference
+## 6       11  restored</code></pre>
+</div>
+<div id="testing-for-equivalence" class="section level3">
+<h3>Testing for equivalence</h3>
+<pre class="r"><code>dataTOSTtwo(
+  data, deps=&#39;richness&#39;, group=&#39;treatment&#39;,
+  low_eqbound=-0.8, high_eqbound=0.8,
+  var_equal=TRUE, desc=TRUE, plots=TRUE
+)</code></pre>
+<pre><code>## 
+##  TOST INDEPENDENT SAMPLES T-TEST
+## 
+##  TOST Results                                                     
+##  ---------------------------------------------------------------- 
+##                              t            df          p           
+##  ---------------------------------------------------------------- 
+##    richness    t-test        -1.433731    25.00000    0.1640388   
+##                TOST Upper    -3.476242    25.00000    0.0009369   
+##                TOST Lower    0.6087802    25.00000    0.2740813   
+##  ---------------------------------------------------------------- 
+## 
+## 
+##  Equivalence Bounds                                                             
+##  ------------------------------------------------------------------------------ 
+##                             Low           High         Lower        Upper       
+##  ------------------------------------------------------------------------------ 
+##    richness    Cohen&#39;s d    -0.8000000    0.8000000                             
+##                Raw           -1.465085     1.465085    -2.253651    0.1968330   
+##  ------------------------------------------------------------------------------ 
+## 
+## 
+##  Descriptives                                                         
+##  -------------------------------------------------------------------- 
+##                 N     Mean        Median      SD          SE          
+##  -------------------------------------------------------------------- 
+##    restored     11    8.909091    10.00000    2.022600    0.6098367   
+##    reference    16    9.937500    9.500000    1.691892    0.4229731   
+##  --------------------------------------------------------------------</code></pre>
+<p><img src="code_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>We do not find evidence of similarity. The confidence interval (CI) does not fall between the lower and upper bounds.</p>
+</div>
+<div id="testing-for-non-inferiority" class="section level3">
+<h3>Testing for non-inferiority</h3>
+<pre class="r"><code>dataTOSTtwo(
+  data, deps=&#39;richness&#39;, group=&#39;treatment&#39;,
+  low_eqbound=-0.8, high_eqbound=Inf,
+  var_equal=TRUE, desc=TRUE, plots=TRUE
+)</code></pre>
+<pre><code>## 
+##  TOST INDEPENDENT SAMPLES T-TEST
+## 
+##  TOST Results                                                      
+##  ----------------------------------------------------------------- 
+##                              t            df          p            
+##  ----------------------------------------------------------------- 
+##    richness    t-test        -1.433731    25.00000     0.1640388   
+##                TOST Upper         -Inf    25.00000    &lt; .0000001   
+##                TOST Lower    0.6087802    25.00000     0.2740813   
+##  ----------------------------------------------------------------- 
+## 
+## 
+##  Equivalence Bounds                                                        
+##  ------------------------------------------------------------------------- 
+##                             Low           High    Lower        Upper       
+##  ------------------------------------------------------------------------- 
+##    richness    Cohen&#39;s d    -0.8000000     Inf                             
+##                Raw           -1.465085     Inf    -2.253651    0.1968330   
+##  ------------------------------------------------------------------------- 
+## 
+## 
+##  Descriptives                                                         
+##  -------------------------------------------------------------------- 
+##                 N     Mean        Median      SD          SE          
+##  -------------------------------------------------------------------- 
+##    restored     11    8.909091    10.00000    2.022600    0.6098367   
+##    reference    16    9.937500    9.500000    1.691892    0.4229731   
+##  --------------------------------------------------------------------</code></pre>
+<p><img src="code_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>The result is inconclusive. To conclude that restored is not inferior to reference, the CI should be above the lower bound.</p>
+</div>
+<div id="more-examples" class="section level3">
+<h3>More examples</h3>
+<p>Our study lacks power at an effect size of 0.8.</p>
+<pre class="r"><code>powerTOSTtwo(alpha=0.05, N=14, low_eqbound_d=-0.8, high_eqbound_d=0.8)</code></pre>
+<pre><code>## The statistical power is 36.31 % for equivalence bounds of -0.8 and 0.8 .</code></pre>
+<pre><code>## </code></pre>
+<pre><code>## [1] 0.3630618</code></pre>
+<p>When designing an experiment, collecting more samples will improve the chances of detecting an effect size of interest.</p>
+<pre class="r"><code>powerTOSTtwo(alpha=0.05, statistical_power=0.8, low_eqbound_d=-0.8, high_eqbound_d=0.8)</code></pre>
+<pre><code>## The required sample size to achieve 80 % power with equivalence bounds of -0.8 and 0.8 is 27 per group, or 54 in total.</code></pre>
+<pre><code>## </code></pre>
+<pre><code>## [1] 26.76202</code></pre>
+<p><br> <code>TOSTER</code> allows us to combine equivalence test and classical test. To do so, we require some descriptive statistics. There are many ways to compute these statistics. Here we use the <code>psych</code> package to display the descriptive statistics in a table.</p>
+<pre class="r"><code>psych::describeBy(
+  richness~treatment, mat=TRUE, digits=4, data=data
+)[,c(&#39;group1&#39;, &#39;n&#39;, &#39;mean&#39;, &#39;sd&#39;)]</code></pre>
+<pre><code>##        group1  n   mean     sd
+## X11  restored 11 8.9091 2.0226
+## X12 reference 16 9.9375 1.6919</code></pre>
+<p>Then we input the values into the <code>TOSTtwo</code> function.</p>
+<pre class="r"><code>TOSTtwo(
+  m1=8.9091, m2=9.9375,
+  sd1=2.0226, sd2=1.6919,
+  n1=11, n2=16,
+  low_eqbound_d=-0.8, high_eqbound_d=0.8,
+  alpha=0.05, var.equal=TRUE
+)</code></pre>
+<pre><code>## TOST results:
+## t-value lower bound: 0.609   p-value lower bound: 0.274
+## t-value upper bound: -3.48   p-value upper bound: 0.0009
+## degrees of freedom : 25
+## 
+## Equivalence bounds (Cohen&#39;s d):
+## low eqbound: -0.8 
+## high eqbound: 0.8
+## 
+## Equivalence bounds (raw scores):
+## low eqbound: -1.4651 
+## high eqbound: 1.4651
+## 
+## TOST confidence interval:
+## lower bound 90% CI: -2.254
+## upper bound 90% CI:  0.197
+## 
+## NHST confidence interval:
+## lower bound 95% CI: -2.506
+## upper bound 95% CI:  0.449
+## 
+## Equivalence Test Result:
+## The equivalence test was non-significant, t(25) = 0.609, p = 0.274, given equivalence bounds of -1.465 and 1.465 (on a raw scale) and an alpha of 0.05.</code></pre>
+<pre><code>## </code></pre>
+<pre><code>## 
+## Null Hypothesis Test Result:
+## The null hypothesis test was non-significant, t(25) = -1.434, p = 0.164, given an alpha of 0.05.</code></pre>
+<pre><code>## </code></pre>
+<pre><code>## 
+## Based on the equivalence test and the null-hypothesis test combined, we can conclude that the observed effect is statistically not different from zero and statistically not equivalent to zero.</code></pre>
+<pre><code>## </code></pre>
+<p><img src="code_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+</div>
+<div id="ecopower" class="section level2">
+<h2>ecopower</h2>
+<div id="multivariate-abundance-data" class="section level3">
+<h3>Multivariate abundance data</h3>
+<pre class="r"><code>cbind(abund[1:6,2:4], head(X))</code></pre>
+<pre><code>##   Achoerodus.viridis Aplodactylus.lophodon Atypichthys.strigatus treatment time
+## 1                  1                     1                    29 reference    1
+## 2                  0                     0                    57  restored    1
+## 3                  0                     0                    55  restored    1
+## 4                  0                     5                   112 reference    1
+## 5                  1                     5                    40 reference    2
+## 6                  1                     1                   151  restored    2</code></pre>
+</div>
+<div id="multivariate-equivalence-test" class="section level3">
+<h3>Multivariate equivalence test</h3>
+<p>Fit a predictive model using the <code>manyglm</code> function.</p>
+<pre class="r"><code>fit = manyglm(abund ~ time + treatment, family=&#39;negative.binomial&#39;, data=X)</code></pre>
+<p>Fit a Gaussian copula factor analytic model.</p>
+<pre class="r"><code>fit.cord = cord(fit)</code></pre>
+<p>Specify the increasers and decreasers.</p>
+<pre class="r"><code>increasers = c(
+  &#39;Aplodactylus.lophodon&#39;, &#39;Atypichthys.strigatus&#39;, &#39;Cheilodactylus.fuscus&#39;,
+  &#39;Pictilabrus.laticlavius&#39;
+)
+
+decreasers = c(
+  &#39;Acanthurus.nigrofuscus&#39;, &#39;Chromis.hypsilepis&#39;, &#39;Parma.microlepis&#39;,
+  &#39;Pempheris.compressa&#39;, &#39;Scorpis.lineolatus&#39;, &#39;Trachinops.taeniatus&#39;
+)</code></pre>
+<p>Generate matrix of effect sizes based on effect size of interest.</p>
+<pre class="r"><code>effect_mat = effect_alt(fit, effect_size=1.5, increasers, decreasers, term=&#39;treatment&#39;)</code></pre>
+<p>Perform a multivariate equivalence test.</p>
+<pre class="r"><code>equivtest(fit.cord, coeffs=effect_mat)</code></pre>
+<pre><code>## Time elapsed: 0 hr 0 min 24 sec</code></pre>
+<pre><code>## Equivalence Test Table
+## 
+## object0: abund ~ time
+## object: abund ~ time + treatment
+## 
+## Multivariate test:
+##         Res.Df Df.diff   Dev Pr(&gt;Dev)
+## object0     20                       
+## object      19       1 80.45    0.999
+## Arguments:
+##  Test statistics calculated assuming uncorrelated response (for faster computation) 
+## P-value calculated using 999 Monte Carlo samples from a factor analytic Gaussian copula 
+## Effect sizes taken from user-entered coefficient matrix, for details apply coef function to this object</code></pre>
+<p>There is no evidence of similarity between the reference and restored sites (p-value &gt; 0.1). This does not necessarily mean that the difference between the treatment levels is greater than a factor of 1.5 - another explanation is that we might not have enough information in the data to accurately estimate the effect size.</p>
+</div>
+</div>
+<div id="tldr-show-me-the-code" class="section level2">
+<h2>TL;DR (show me the code)</h2>
+<pre class="r"><code># Install required packages from CRAN and GitHub.
+install.packages(c(&#39;TOSTER&#39;, &#39;ecoCopula&#39;, &#39;mvabund&#39;, &#39;devtools&#39;, &#39;psych&#39;))
+devtools::install_github(&#39;lsjmichelle/ecopower@2b3d7fe&#39;)
+
+# Load packages
+library(TOSTER)
+library(ecopower)
+library(ecoCopula)
+library(mvabund)
+
+# Load data 
+data(&#39;crayweed&#39;, package=&#39;ecopower&#39;)
+abund = crayweed$abund
+X = crayweed$X
+
+# TOSTER
+
+# Species richness data
+data = data.frame(richness = rowSums(abund&gt;0))
+data$treatment = X$treatment
+data$treatment = factor(data$treatment, levels=c(&#39;restored&#39;, &#39;reference&#39;))
+head(data)
+
+# Testing for equivalence
+dataTOSTtwo(
+  data, deps=&#39;richness&#39;, group=&#39;treatment&#39;,
+  low_eqbound=-0.8, high_eqbound=0.8,
+  var_equal=TRUE, desc=TRUE, plots=TRUE
+)
+
+# Testing for non-inferiority
+dataTOSTtwo(
+  data, deps=&#39;richness&#39;, group=&#39;treatment&#39;,
+  low_eqbound=-0.8, high_eqbound=Inf,
+  var_equal=TRUE, desc=TRUE, plots=TRUE
+)
+
+# More examples
+
+powerTOSTtwo(alpha=0.05, N=14, low_eqbound_d=-0.8, high_eqbound_d=0.8)
+
+powerTOSTtwo(alpha=0.05, statistical_power=0.8, low_eqbound_d=-0.8, high_eqbound_d=0.8)
+
+# Descriptive statistics
+psych::describeBy(
+  richness~treatment, mat=TRUE, digits=4, data=data
+)[,c(&#39;group1&#39;, &#39;n&#39;, &#39;mean&#39;, &#39;sd&#39;)]
+
+TOSTtwo(
+  m1=8.9091, m2=9.9375,
+  sd1=2.0226, sd2=1.6919,
+  n1=11, n2=16,
+  low_eqbound_d=-0.8, high_eqbound_d=0.8,
+  alpha=0.05, var.equal=TRUE
+)
+
+# ecopower - Multivariate equivalence test
+
+# Multivariate abundance data
+cbind(abund[1:6,2:4], head(X))
+
+# Fit a predictive model using the manyglm function
+fit = manyglm(abund ~ time + treatment, family=&#39;negative.binomial&#39;, data=X)
+
+# Fit a Gaussian copula factor analytic model
+fit.cord = cord(fit)
+
+# Specify the increasers and decreasers
+increasers = c(
+  &#39;Aplodactylus.lophodon&#39;, &#39;Atypichthys.strigatus&#39;, &#39;Cheilodactylus.fuscus&#39;,
+  &#39;Pictilabrus.laticlavius&#39;
+)
+
+decreasers = c(
+  &#39;Acanthurus.nigrofuscus&#39;, &#39;Chromis.hypsilepis&#39;, &#39;Parma.microlepis&#39;,
+  &#39;Pempheris.compressa&#39;, &#39;Scorpis.lineolatus&#39;, &#39;Trachinops.taeniatus&#39;
+)
+
+# Generate matrix of effect sizes based on effect size of interest
+effect_mat = effect_alt(fit, effect_size=1.5, increasers, decreasers, term=&#39;treatment&#39;)
+
+# Perform a multivariate equivalence test
+equivtest(fit.cord, coeffs=effect_mat)</code></pre>
+</div>
+
+<script type="text/javascript" src="links.js"></script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
