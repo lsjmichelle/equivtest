@@ -13,7 +13,7 @@
 
 <title>Equivalence testing</title>
 
-<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
@@ -303,12 +303,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -566,19 +566,19 @@ head(data)</code></pre>
 <pre class="r"><code>fit.cord = cord(fit)</code></pre>
 <p>Specify the increasers and decreasers.</p>
 <pre class="r"><code>increasers = c(
-  &#39;Aplodactylus.lophodon&#39;, &#39;Atypichthys.strigatus&#39;, &#39;Cheilodactylus.fuscus&#39;,
-  &#39;Pictilabrus.laticlavius&#39;
+  &#39;Acanthurus.nigrofuscus&#39;, &#39;Chromis.hypsilepis&#39;, &#39;Parma.microlepis&#39;,
+  &#39;Pempheris.compressa&#39;, &#39;Scorpis.lineolatus&#39;, &#39;Trachinops.taeniatus&#39;
 )
 
 decreasers = c(
-  &#39;Acanthurus.nigrofuscus&#39;, &#39;Chromis.hypsilepis&#39;, &#39;Parma.microlepis&#39;,
-  &#39;Pempheris.compressa&#39;, &#39;Scorpis.lineolatus&#39;, &#39;Trachinops.taeniatus&#39;
+  &#39;Aplodactylus.lophodon&#39;, &#39;Atypichthys.strigatus&#39;, &#39;Cheilodactylus.fuscus&#39;,
+  &#39;Pictilabrus.laticlavius&#39;
 )</code></pre>
 <p>Generate matrix of effect sizes based on effect size of interest.</p>
 <pre class="r"><code>effect_mat = effect_alt(fit, effect_size=1.5, increasers, decreasers, term=&#39;treatment&#39;)</code></pre>
 <p>Perform a multivariate equivalence test.</p>
 <pre class="r"><code>equivtest(fit.cord, coeffs=effect_mat)</code></pre>
-<pre><code>## Time elapsed: 0 hr 0 min 25 sec</code></pre>
+<pre><code>## Time elapsed: 0 hr 0 min 28 sec</code></pre>
 <pre><code>## Equivalence Test Table
 ## 
 ## object0: abund ~ time
@@ -587,7 +587,7 @@ decreasers = c(
 ## Multivariate test:
 ##         Res.Df Df.diff   Dev Pr(&gt;Dev)
 ## object0     20                       
-## object      19       1 80.45    0.999
+## object      19       1 80.45    0.997
 ## Arguments:
 ##  Test statistics calculated assuming uncorrelated response (for faster computation) 
 ## P-value calculated using 999 Monte Carlo samples from a factor analytic Gaussian copula 
@@ -666,13 +666,13 @@ fit.cord = cord(fit)
 
 # Specify the increasers and decreasers
 increasers = c(
-  &#39;Aplodactylus.lophodon&#39;, &#39;Atypichthys.strigatus&#39;, &#39;Cheilodactylus.fuscus&#39;,
-  &#39;Pictilabrus.laticlavius&#39;
+  &#39;Acanthurus.nigrofuscus&#39;, &#39;Chromis.hypsilepis&#39;, &#39;Parma.microlepis&#39;,
+  &#39;Pempheris.compressa&#39;, &#39;Scorpis.lineolatus&#39;, &#39;Trachinops.taeniatus&#39;
 )
 
 decreasers = c(
-  &#39;Acanthurus.nigrofuscus&#39;, &#39;Chromis.hypsilepis&#39;, &#39;Parma.microlepis&#39;,
-  &#39;Pempheris.compressa&#39;, &#39;Scorpis.lineolatus&#39;, &#39;Trachinops.taeniatus&#39;
+  &#39;Aplodactylus.lophodon&#39;, &#39;Atypichthys.strigatus&#39;, &#39;Cheilodactylus.fuscus&#39;,
+  &#39;Pictilabrus.laticlavius&#39;
 )
 
 # Generate matrix of effect sizes based on effect size of interest

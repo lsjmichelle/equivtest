@@ -146,13 +146,13 @@ fit.cord = cord(fit)
 Specify the increasers and decreasers.
 ```{r}
 increasers = c(
-  'Aplodactylus.lophodon', 'Atypichthys.strigatus', 'Cheilodactylus.fuscus',
-  'Pictilabrus.laticlavius'
+  'Acanthurus.nigrofuscus', 'Chromis.hypsilepis', 'Parma.microlepis',
+  'Pempheris.compressa', 'Scorpis.lineolatus', 'Trachinops.taeniatus'
 )
 
 decreasers = c(
-  'Acanthurus.nigrofuscus', 'Chromis.hypsilepis', 'Parma.microlepis',
-  'Pempheris.compressa', 'Scorpis.lineolatus', 'Trachinops.taeniatus'
+  'Aplodactylus.lophodon', 'Atypichthys.strigatus', 'Cheilodactylus.fuscus',
+  'Pictilabrus.laticlavius'
 )
 ```
 
@@ -243,13 +243,13 @@ fit.cord = cord(fit)
 
 # Specify the increasers and decreasers
 increasers = c(
-  'Aplodactylus.lophodon', 'Atypichthys.strigatus', 'Cheilodactylus.fuscus',
-  'Pictilabrus.laticlavius'
+  'Acanthurus.nigrofuscus', 'Chromis.hypsilepis', 'Parma.microlepis',
+  'Pempheris.compressa', 'Scorpis.lineolatus', 'Trachinops.taeniatus'
 )
 
 decreasers = c(
-  'Acanthurus.nigrofuscus', 'Chromis.hypsilepis', 'Parma.microlepis',
-  'Pempheris.compressa', 'Scorpis.lineolatus', 'Trachinops.taeniatus'
+  'Aplodactylus.lophodon', 'Atypichthys.strigatus', 'Cheilodactylus.fuscus',
+  'Pictilabrus.laticlavius'
 )
 
 # Generate matrix of effect sizes based on effect size of interest

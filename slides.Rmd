@@ -247,13 +247,13 @@ How do we decide what effect size to use for each species?
 <div class="incremental">
 ```{r, out.width='70%'}
 increasers = c(
-  'Aplodactylus.lophodon', 'Atypichthys.strigatus', 'Cheilodactylus.fuscus',
-  'Pictilabrus.laticlavius'
+  'Acanthurus.nigrofuscus', 'Chromis.hypsilepis', 'Parma.microlepis',
+  'Pempheris.compressa', 'Scorpis.lineolatus', 'Trachinops.taeniatus'
 )
 
 decreasers = c(
-  'Acanthurus.nigrofuscus', 'Chromis.hypsilepis', 'Parma.microlepis',
-  'Pempheris.compressa', 'Scorpis.lineolatus', 'Trachinops.taeniatus'
+  'Aplodactylus.lophodon', 'Atypichthys.strigatus', 'Cheilodactylus.fuscus',
+  'Pictilabrus.laticlavius'
 )
 
 fish = data.frame(matrix(nrow=2,ncol=20,dimnames = list(NULL, colnames(abund))))
@@ -270,7 +270,7 @@ plot(
 )
 lines(1:20, fish[2,], col='red',type='o')
 legend(
-  "top", legend=c("Reference", "Restored"), lty=c(1,1), title="", lwd = 1,
+  "bottom", legend=c("Reference", "Restored"), lty=c(1,1), title="", lwd = 1,
   col=c("blue","red"), inset=0.01, box.lty = 0, y.intersp = 0.8, cex=0.8
 )
 text(
@@ -307,13 +307,13 @@ fit.cord = cord(fit)
 ## Multivariate equivalence testing | Specifying the effect
 ```{r, echo=TRUE}
 increasers = c(
-  'Aplodactylus.lophodon', 'Atypichthys.strigatus', 'Cheilodactylus.fuscus',
-  'Pictilabrus.laticlavius'
+  'Acanthurus.nigrofuscus', 'Chromis.hypsilepis', 'Parma.microlepis',
+  'Pempheris.compressa', 'Scorpis.lineolatus', 'Trachinops.taeniatus'
 )
 
 decreasers = c(
-  'Acanthurus.nigrofuscus', 'Chromis.hypsilepis', 'Parma.microlepis',
-  'Pempheris.compressa', 'Scorpis.lineolatus', 'Trachinops.taeniatus'
+  'Aplodactylus.lophodon', 'Atypichthys.strigatus', 'Cheilodactylus.fuscus',
+  'Pictilabrus.laticlavius'
 )
 
 effect_mat = effect_alt(fit, effect_size=1.5, increasers, decreasers, term='treatment')

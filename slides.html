@@ -32,7 +32,7 @@
     };
   </script>
 
-  <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
   <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
   <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
   <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
@@ -561,13 +561,13 @@ Copula models have two steps:
 </article></slide><slide class=""><hgroup><h2>Multivariate equivalence testing </h2><h3> Specifying the effect</h3></hgroup><article  id="multivariate-equivalence-testing-specifying-the-effect-1">
 
 <pre class = 'prettyprint lang-r'>increasers = c(
-  &#39;Aplodactylus.lophodon&#39;, &#39;Atypichthys.strigatus&#39;, &#39;Cheilodactylus.fuscus&#39;,
-  &#39;Pictilabrus.laticlavius&#39;
+  &#39;Acanthurus.nigrofuscus&#39;, &#39;Chromis.hypsilepis&#39;, &#39;Parma.microlepis&#39;,
+  &#39;Pempheris.compressa&#39;, &#39;Scorpis.lineolatus&#39;, &#39;Trachinops.taeniatus&#39;
 )
 
 decreasers = c(
-  &#39;Acanthurus.nigrofuscus&#39;, &#39;Chromis.hypsilepis&#39;, &#39;Parma.microlepis&#39;,
-  &#39;Pempheris.compressa&#39;, &#39;Scorpis.lineolatus&#39;, &#39;Trachinops.taeniatus&#39;
+  &#39;Aplodactylus.lophodon&#39;, &#39;Atypichthys.strigatus&#39;, &#39;Cheilodactylus.fuscus&#39;,
+  &#39;Pictilabrus.laticlavius&#39;
 )
 
 effect_mat = effect_alt(fit, effect_size=1.5, increasers, decreasers, term=&#39;treatment&#39;)</pre>
@@ -576,7 +576,7 @@ effect_mat = effect_alt(fit, effect_size=1.5, increasers, decreasers, term=&#39;
 
 <pre class = 'prettyprint lang-r'>equivtest(fit.cord, coeffs=effect_mat)</pre>
 
-<pre >## Time elapsed: 0 hr 0 min 25 sec</pre>
+<pre >## Time elapsed: 0 hr 0 min 28 sec</pre>
 
 <pre >## Equivalence Test Table
 ## 
@@ -586,7 +586,7 @@ effect_mat = effect_alt(fit, effect_size=1.5, increasers, decreasers, term=&#39;
 ## Multivariate test:
 ##         Res.Df Df.diff   Dev Pr(&gt;Dev)
 ## object0     20                       
-## object      19       1 80.45    0.999
+## object      19       1 80.45    0.998
 ## Arguments:
 ##  Test statistics calculated assuming uncorrelated response (for faster computation) 
 ## P-value calculated using 999 Monte Carlo samples from a factor analytic Gaussian copula 

@@ -1,6 +1,6 @@
 ---
 title: 'Equivalence testing - is there evidence of similarity?'
-author: '[Michelle Lim](https://github.com/lsjmichelle){target="_blank"} for [Eco-Stats Lab](http://eco-stats.blogspot.com/){target="_blank"}, May 2021'
+author: '[Michelle Lim](https://github.com/lsjmichelle){target="_blank"} for [Eco-Stats Lab](http://eco-stats.blogspot.com/){target="_blank"}, 14 May 2021'
 output: html_document
 ---
 
