@@ -130,7 +130,7 @@ knitr::include_graphics(here('images', 'map.png'))
 Install packages
 ```{r, echo=TRUE, eval=FALSE}
 install.packages(c('TOSTER', 'ecoCopula', 'mvabund', 'devtools'))
-devtools::install_github('lsjmichelle/ecopower@2b3d7fe')
+devtools::install_github('lsjmichelle/ecopower@3803ec5')
 ```
 
 Load package
@@ -337,7 +337,7 @@ equivtest(fit.cord, coeffs=effect_mat)
 <div class="incremental">
 - Try `equivtest` in `ecopower` on GitHub for multivariate abundances
 ```{r, echo=TRUE, eval=FALSE}
-devtools::install_github('lsjmichelle/ecopower@2b3d7fe')
+devtools::install_github('lsjmichelle/ecopower@3803ec5')
 ```
 </div>
 <div class="incremental">

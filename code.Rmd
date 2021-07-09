@@ -27,7 +27,8 @@ Install required packages from CRAN and GitHub.
 
 ```{r, eval=FALSE}
 install.packages(c('TOSTER', 'ecoCopula', 'mvabund', 'devtools', 'psych'))
-devtools::install_github('lsjmichelle/ecopower@2b3d7fe')
+devtools::install_github('lsjmichelle/ecopower@3803ec5')
+devtools::install_github('dwarton/ecostats')
 ```
 
 ### Load packages
@@ -172,11 +173,65 @@ the treatment levels is greater than a factor of 1.5 - another explanation is
 that we might not have enough information in the data to accurately estimate
 the effect size.
 
+### Defining the null hypothesis
+
+The `equivtest` function has been written in a general fashion so it is capable
+of handling any user-defined null hypothesis, and is not limited to assessing
+the significance of a single treatment effect.
+
+Here we include an offset term in the fitted model. Note that the latest versions
+of `ecopower` and `ecostats` are required to run this example
+(see [Install packages](code.html#install-packages)).
+
+Load the `reveg` dataset.
+```{r}
+data(reveg, package="ecostats")
+abund = mvabund(reveg$abund)
+X = data.frame(treatment=reveg$treatment, pitfalls=reveg$pitfalls)
+```
+
+Fit the null model.
+```{r}
+fit0 = manyglm(abund ~ 1 + offset(log(pitfalls)), family="negative.binomial", data=X)
+
+fit0.cord = cord(fit0)
+```
+
+Fit the alternative model.
+```{r}
+fit_reveg = manyglm(abund ~ treatment + offset(log(pitfalls)), family="negative.binomial", data=X)
+
+fit_reveg.cord = cord(fit_reveg)
+```
+
+Specify the increasers and decreasers.
+```{r}
+increasers = c(
+  "Acarina", "Amphipoda", "Araneae",
+  "Coleoptera", "Collembola",
+  "Haplotaxida", "Hemiptera", "Hymenoptera",
+  "Isopoda"
+)
+
+decreasers = c("Blattodea", "Tricladida")
+```
+
+Generate matrix of effect sizes based on effect size of interest.
+```{r}
+effect_mat = effect_alt(fit_reveg, effect_size=5, increasers, decreasers, term='treatment')
+```
+
+Finally, we specify the `object0` argument to perform the test.
+```{r, eval=TRUE}
+equivtest(fit_reveg.cord, effect_mat, object0=fit0.cord)
+```
+
 ## TL;DR (show me the code)
 ```{r, eval=FALSE}
 # Install required packages from CRAN and GitHub.
 install.packages(c('TOSTER', 'ecoCopula', 'mvabund', 'devtools', 'psych'))
-devtools::install_github('lsjmichelle/ecopower@2b3d7fe')
+devtools::install_github('lsjmichelle/ecopower@3803ec5')
+devtools::install_github('dwarton/ecostats')
 
 # Load packages
 library(TOSTER)
@@ -257,4 +312,37 @@ effect_mat = effect_alt(fit, effect_size=1.5, increasers, decreasers, term='trea
 
 # Perform a multivariate equivalence test
 equivtest(fit.cord, coeffs=effect_mat)
+
+# Defining the null hypothesis
+
+# Load the reveg dataset
+data(reveg, package="ecostats")
+abund = mvabund(reveg$abund)
+X = data.frame(treatment=reveg$treatment, pitfalls=reveg$pitfalls)
+
+# Fit the null model
+fit0 = manyglm(abund ~ 1 + offset(log(pitfalls)), family="negative.binomial", data=X)
+
+fit0.cord = cord(fit0)
+
+# Fit the alternative model
+fit_reveg = manyglm(abund ~ treatment + offset(log(pitfalls)), family="negative.binomial", data=X)
+
+fit_reveg.cord = cord(fit_reveg)
+
+# Specify the increasers and decreasers
+increasers = c(
+  "Acarina", "Amphipoda", "Araneae",
+  "Coleoptera", "Collembola",
+  "Haplotaxida", "Hemiptera", "Hymenoptera",
+  "Isopoda"
+)
+
+decreasers = c("Blattodea", "Tricladida")
+
+# Generate matrix of effect sizes based on effect size of interest
+effect_mat = effect_alt(fit_reveg, effect_size=5, increasers, decreasers, term='treatment')
+
+# Perform the test
+equivtest(fit_reveg.cord, effect_mat, object0=fit0.cord)
 ```
