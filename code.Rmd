@@ -116,8 +116,8 @@ psych::describeBy(
 Then we input the values into the `TOSTtwo` function.
 ```{r}
 TOSTtwo(
-  m1=8.9091, m2=9.9375,
-  sd1=2.0226, sd2=1.6919,
+  m1=9.5455, m2=11.2500,
+  sd1=2.3394, sd2=2.2657,
   n1=11, n2=16,
   low_eqbound_d=-0.8, high_eqbound_d=0.8,
   alpha=0.05, var.equal=TRUE
@@ -279,8 +279,8 @@ psych::describeBy(
 )[,c('group1', 'n', 'mean', 'sd')]
 
 TOSTtwo(
-  m1=8.9091, m2=9.9375,
-  sd1=2.0226, sd2=1.6919,
+  m1=9.5455, m2=11.2500,
+  sd1=2.3394, sd2=2.2657,
   n1=11, n2=16,
   low_eqbound_d=-0.8, high_eqbound_d=0.8,
   alpha=0.05, var.equal=TRUE

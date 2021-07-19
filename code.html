@@ -506,15 +506,15 @@ head(data)</code></pre>
 ## X12 reference 16 11.2500 2.2657</code></pre>
 <p>Then we input the values into the <code>TOSTtwo</code> function.</p>
 <pre class="r"><code>TOSTtwo(
-  m1=8.9091, m2=9.9375,
-  sd1=2.0226, sd2=1.6919,
+  m1=9.5455, m2=11.2500,
+  sd1=2.3394, sd2=2.2657,
   n1=11, n2=16,
   low_eqbound_d=-0.8, high_eqbound_d=0.8,
   alpha=0.05, var.equal=TRUE
 )</code></pre>
 <pre><code>## TOST results:
-## t-value lower bound: 0.609   p-value lower bound: 0.274
-## t-value upper bound: -3.48   p-value upper bound: 0.0009
+## t-value lower bound: 0.147   p-value lower bound: 0.442
+## t-value upper bound: -3.94   p-value upper bound: 0.0003
 ## degrees of freedom : 25
 ## 
 ## Equivalence bounds (Cohen&#39;s d):
@@ -522,23 +522,23 @@ head(data)</code></pre>
 ## high eqbound: 0.8
 ## 
 ## Equivalence bounds (raw scores):
-## low eqbound: -1.4651 
-## high eqbound: 1.4651
+## low eqbound: -1.8364 
+## high eqbound: 1.8364
 ## 
 ## TOST confidence interval:
-## lower bound 90% CI: -2.254
-## upper bound 90% CI:  0.197
+## lower bound 90% CI: -3.24
+## upper bound 90% CI:  -0.169
 ## 
 ## NHST confidence interval:
-## lower bound 95% CI: -2.506
-## upper bound 95% CI:  0.449
+## lower bound 95% CI: -3.556
+## upper bound 95% CI:  0.147
 ## 
 ## Equivalence Test Result:
-## The equivalence test was non-significant, t(25) = 0.609, p = 0.274, given equivalence bounds of -1.465 and 1.465 (on a raw scale) and an alpha of 0.05.</code></pre>
+## The equivalence test was non-significant, t(25) = 0.147, p = 0.442, given equivalence bounds of -1.836 and 1.836 (on a raw scale) and an alpha of 0.05.</code></pre>
 <pre><code>## </code></pre>
 <pre><code>## 
 ## Null Hypothesis Test Result:
-## The null hypothesis test was non-significant, t(25) = -1.434, p = 0.164, given an alpha of 0.05.</code></pre>
+## The null hypothesis test was non-significant, t(25) = -1.896, p = 0.0696, given an alpha of 0.05.</code></pre>
 <pre><code>## </code></pre>
 <pre><code>## 
 ## Based on the equivalence test and the null-hypothesis test combined, we can conclude that the observed effect is statistically not different from zero and statistically not equivalent to zero.</code></pre>
@@ -580,7 +580,7 @@ decreasers = c(
 <pre class="r"><code>effect_mat = effect_alt(fit, effect_size=1.5, increasers, decreasers, term=&#39;treatment&#39;)</code></pre>
 <p>Perform a multivariate equivalence test.</p>
 <pre class="r"><code>equivtest(fit.cord, coeffs=effect_mat)</code></pre>
-<pre><code>## Time elapsed: 0 hr 0 min 42 sec</code></pre>
+<pre><code>## Time elapsed: 0 hr 0 min 41 sec</code></pre>
 <pre><code>## Equivalence Test Table
 ## 
 ## object0: abund ~ time
@@ -625,7 +625,7 @@ decreasers = c(&#39;Blattodea&#39;, &#39;Tricladida&#39;)</code></pre>
 <pre class="r"><code>effect_mat = effect_alt(fit_reveg, effect_size=5, increasers, decreasers, term=&#39;treatment&#39;)</code></pre>
 <p>Finally, we specify the <code>object0</code> argument to perform the test.</p>
 <pre class="r"><code>equivtest(fit_reveg.cord, effect_mat, object0=fit0.cord)</code></pre>
-<pre><code>## Time elapsed: 0 hr 0 min 29 sec</code></pre>
+<pre><code>## Time elapsed: 0 hr 0 min 26 sec</code></pre>
 <pre><code>## Equivalence Test Table
 ## 
 ## object0: abund ~ 1 + offset(log(pitfalls))
@@ -634,7 +634,7 @@ decreasers = c(&#39;Blattodea&#39;, &#39;Tricladida&#39;)</code></pre>
 ## Multivariate test:
 ##         Res.Df Df.diff   Dev Pr(&gt;Dev)
 ## object0      9                       
-## object       8       1 78.25    0.641
+## object       8       1 78.25    0.662
 ## Arguments:
 ##  Test statistics calculated assuming uncorrelated response (for faster computation) 
 ## P-value calculated using 999 Monte Carlo samples from a factor analytic Gaussian copula 
@@ -693,8 +693,8 @@ psych::describeBy(
 )[,c(&#39;group1&#39;, &#39;n&#39;, &#39;mean&#39;, &#39;sd&#39;)]
 
 TOSTtwo(
-  m1=8.9091, m2=9.9375,
-  sd1=2.0226, sd2=1.6919,
+  m1=9.5455, m2=11.2500,
+  sd1=2.3394, sd2=2.2657,
   n1=11, n2=16,
   low_eqbound_d=-0.8, high_eqbound_d=0.8,
   alpha=0.05, var.equal=TRUE
