@@ -373,7 +373,7 @@ div.tocify {
 <h3>Install packages</h3>
 <p>Install required packages from CRAN and GitHub.</p>
 <pre class="r"><code>install.packages(c(&#39;TOSTER&#39;, &#39;ecoCopula&#39;, &#39;mvabund&#39;, &#39;devtools&#39;, &#39;psych&#39;))
-devtools::install_github(&#39;lsjmichelle/ecopower@3803ec5&#39;)
+devtools::install_github(&#39;lsjmichelle/ecopower@1e5d39a&#39;)
 devtools::install_github(&#39;dwarton/ecostats&#39;)</code></pre>
 </div>
 <div id="load-packages" class="section level3">
@@ -385,7 +385,7 @@ library(mvabund)</code></pre>
 </div>
 <div id="load-data" class="section level3">
 <h3>Load data</h3>
-<p>The <code>crayweed</code> dataset was collected over a period of seven time points and contains the counts of 20 fish species at 27 sites - 16 reference sites and 11 restored sites.</p>
+<p>The <code>crayweed</code> dataset was collected over a period of seven time points and contains the counts of 34 fish species at 27 sites - 16 reference sites and 11 restored sites.</p>
 <pre class="r"><code>data(&#39;crayweed&#39;, package=&#39;ecopower&#39;)
 abund = crayweed$abund
 X = crayweed$X</code></pre>
@@ -400,12 +400,12 @@ data$treatment = X$treatment
 data$treatment = factor(data$treatment, levels=c(&#39;restored&#39;, &#39;reference&#39;))
 head(data)</code></pre>
 <pre><code>##   richness treatment
-## 1        7 reference
+## 1        8 reference
 ## 2        5  restored
 ## 3        9  restored
-## 4       13 reference
+## 4       15 reference
 ## 5        9 reference
-## 6       11  restored</code></pre>
+## 6       12  restored</code></pre>
 </div>
 <div id="testing-for-equivalence" class="section level3">
 <h3>Testing for equivalence</h3>
@@ -421,27 +421,27 @@ head(data)</code></pre>
 ##  ---------------------------------------------------------------- 
 ##                              t            df          p           
 ##  ---------------------------------------------------------------- 
-##    richness    t-test        -1.433731    25.00000    0.1640388   
-##                TOST Upper    -3.476242    25.00000    0.0009369   
-##                TOST Lower    0.6087802    25.00000    0.2740813   
+##    richness    t-test        -1.895899    25.00000    0.0695896   
+##                TOST Upper    -3.938410    25.00000    0.0002901   
+##                TOST Lower    0.1466122    25.00000    0.4423070   
 ##  ---------------------------------------------------------------- 
 ## 
 ## 
-##  Equivalence Bounds                                                             
-##  ------------------------------------------------------------------------------ 
-##                             Low           High         Lower        Upper       
-##  ------------------------------------------------------------------------------ 
-##    richness    Cohen&#39;s d    -0.8000000    0.8000000                             
-##                Raw           -1.465085     1.465085    -2.253651    0.1968330   
-##  ------------------------------------------------------------------------------ 
+##  Equivalence Bounds                                                              
+##  ------------------------------------------------------------------------------- 
+##                             Low           High         Lower        Upper        
+##  ------------------------------------------------------------------------------- 
+##    richness    Cohen&#39;s d    -0.8000000    0.8000000                              
+##                Raw           -1.836360     1.836360    -3.240283    -0.1688077   
+##  ------------------------------------------------------------------------------- 
 ## 
 ## 
 ##  Descriptives                                                         
 ##  -------------------------------------------------------------------- 
 ##                 N     Mean        Median      SD          SE          
 ##  -------------------------------------------------------------------- 
-##    restored     11    8.909091    10.00000    2.022600    0.6098367   
-##    reference    16    9.937500    9.500000    1.691892    0.4229731   
+##    restored     11    9.545455    11.00000    2.339386    0.7053514   
+##    reference    16    11.25000    12.00000    2.265686    0.5664215   
 ##  --------------------------------------------------------------------</code></pre>
 <p><img src="code_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>We do not find evidence of similarity. The confidence interval (CI) does not fall between the lower and upper bounds.</p>
@@ -460,27 +460,27 @@ head(data)</code></pre>
 ##  ----------------------------------------------------------------- 
 ##                              t            df          p            
 ##  ----------------------------------------------------------------- 
-##    richness    t-test        -1.433731    25.00000     0.1640388   
+##    richness    t-test        -1.895899    25.00000     0.0695896   
 ##                TOST Upper         -Inf    25.00000    &lt; .0000001   
-##                TOST Lower    0.6087802    25.00000     0.2740813   
+##                TOST Lower    0.1466122    25.00000     0.4423070   
 ##  ----------------------------------------------------------------- 
 ## 
 ## 
-##  Equivalence Bounds                                                        
-##  ------------------------------------------------------------------------- 
-##                             Low           High    Lower        Upper       
-##  ------------------------------------------------------------------------- 
-##    richness    Cohen&#39;s d    -0.8000000     Inf                             
-##                Raw           -1.465085     Inf    -2.253651    0.1968330   
-##  ------------------------------------------------------------------------- 
+##  Equivalence Bounds                                                         
+##  -------------------------------------------------------------------------- 
+##                             Low           High    Lower        Upper        
+##  -------------------------------------------------------------------------- 
+##    richness    Cohen&#39;s d    -0.8000000     Inf                              
+##                Raw           -1.836360     Inf    -3.240283    -0.1688077   
+##  -------------------------------------------------------------------------- 
 ## 
 ## 
 ##  Descriptives                                                         
 ##  -------------------------------------------------------------------- 
 ##                 N     Mean        Median      SD          SE          
 ##  -------------------------------------------------------------------- 
-##    restored     11    8.909091    10.00000    2.022600    0.6098367   
-##    reference    16    9.937500    9.500000    1.691892    0.4229731   
+##    restored     11    9.545455    11.00000    2.339386    0.7053514   
+##    reference    16    11.25000    12.00000    2.265686    0.5664215   
 ##  --------------------------------------------------------------------</code></pre>
 <p><img src="code_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>The result is inconclusive. To conclude that restored is not inferior to reference, the CI should be above the lower bound.</p>
@@ -501,9 +501,9 @@ head(data)</code></pre>
 <pre class="r"><code>psych::describeBy(
   richness~treatment, mat=TRUE, digits=4, data=data
 )[,c(&#39;group1&#39;, &#39;n&#39;, &#39;mean&#39;, &#39;sd&#39;)]</code></pre>
-<pre><code>##        group1  n   mean     sd
-## X11  restored 11 8.9091 2.0226
-## X12 reference 16 9.9375 1.6919</code></pre>
+<pre><code>##        group1  n    mean     sd
+## X11  restored 11  9.5455 2.3394
+## X12 reference 16 11.2500 2.2657</code></pre>
 <p>Then we input the values into the <code>TOSTtwo</code> function.</p>
 <pre class="r"><code>TOSTtwo(
   m1=8.9091, m2=9.9375,
@@ -551,13 +551,13 @@ head(data)</code></pre>
 <div id="multivariate-abundance-data" class="section level3">
 <h3>Multivariate abundance data</h3>
 <pre class="r"><code>cbind(abund[1:6,2:4], head(X))</code></pre>
-<pre><code>##   Achoerodus.viridis Aplodactylus.lophodon Atypichthys.strigatus treatment time
-## 1                  1                     1                    29 reference    1
-## 2                  0                     0                    57  restored    1
-## 3                  0                     0                    55  restored    1
-## 4                  0                     5                   112 reference    1
-## 5                  1                     5                    40 reference    2
-## 6                  1                     1                   151  restored    2</code></pre>
+<pre><code>##   Acanthopagrus.australis Acanthurus.nigrofuscus Achoerodus.viridis treatment time
+## 1                       0                      0                  1 reference    1
+## 2                       0                      0                  0  restored    1
+## 3                       0                      0                  0  restored    1
+## 4                       0                      0                  0 reference    1
+## 5                       0                      0                  1 reference    2
+## 6                       3                      0                  1  restored    2</code></pre>
 </div>
 <div id="multivariate-equivalence-test" class="section level3">
 <h3>Multivariate equivalence test</h3>
@@ -567,19 +567,20 @@ head(data)</code></pre>
 <pre class="r"><code>fit.cord = cord(fit)</code></pre>
 <p>Specify the increasers and decreasers.</p>
 <pre class="r"><code>increasers = c(
-  &#39;Acanthurus.nigrofuscus&#39;, &#39;Chromis.hypsilepis&#39;, &#39;Parma.microlepis&#39;,
-  &#39;Pempheris.compressa&#39;, &#39;Scorpis.lineolatus&#39;, &#39;Trachinops.taeniatus&#39;
+  &#39;Abudefduf.sp.&#39;, &#39;Acanthurus.nigrofuscus&#39;, &#39;Chromis.hypsilepis&#39;,
+  &#39;Parma.microlepis&#39;, &#39;Pempheris.compressa&#39;, &#39;Scorpis.lineolatus&#39;,
+  &#39;Trachinops.taeniatus&#39;
 )
 
 decreasers = c(
   &#39;Aplodactylus.lophodon&#39;, &#39;Atypichthys.strigatus&#39;, &#39;Cheilodactylus.fuscus&#39;,
-  &#39;Pictilabrus.laticlavius&#39;
+  &#39;Olisthops.cyanomelas&#39;, &#39;Pictilabrus.laticlavius&#39;
 )</code></pre>
 <p>Generate matrix of effect sizes based on effect size of interest.</p>
 <pre class="r"><code>effect_mat = effect_alt(fit, effect_size=1.5, increasers, decreasers, term=&#39;treatment&#39;)</code></pre>
 <p>Perform a multivariate equivalence test.</p>
 <pre class="r"><code>equivtest(fit.cord, coeffs=effect_mat)</code></pre>
-<pre><code>## Time elapsed: 0 hr 0 min 27 sec</code></pre>
+<pre><code>## Time elapsed: 0 hr 0 min 42 sec</code></pre>
 <pre><code>## Equivalence Test Table
 ## 
 ## object0: abund ~ time
@@ -588,7 +589,7 @@ decreasers = c(
 ## Multivariate test:
 ##         Res.Df Df.diff   Dev Pr(&gt;Dev)
 ## object0     20                       
-## object      19       1 80.45        1
+## object      19       1 128.9        1
 ## Arguments:
 ##  Test statistics calculated assuming uncorrelated response (for faster computation) 
 ## P-value calculated using 999 Monte Carlo samples from a factor analytic Gaussian copula 
@@ -613,18 +614,18 @@ fit0.cord = cord(fit0)</code></pre>
 fit_reveg.cord = cord(fit_reveg)</code></pre>
 <p>Specify the increasers and decreasers.</p>
 <pre class="r"><code>increasers = c(
-  &quot;Acarina&quot;, &quot;Amphipoda&quot;, &quot;Araneae&quot;,
-  &quot;Coleoptera&quot;, &quot;Collembola&quot;,
-  &quot;Haplotaxida&quot;, &quot;Hemiptera&quot;, &quot;Hymenoptera&quot;,
-  &quot;Isopoda&quot;
+  &#39;Acarina&#39;, &#39;Amphipoda&#39;, &#39;Araneae&#39;,
+  &#39;Coleoptera&#39;, &#39;Collembola&#39;,
+  &#39;Haplotaxida&#39;, &#39;Hemiptera&#39;, &#39;Hymenoptera&#39;,
+  &#39;Isopoda&#39;
 )
 
-decreasers = c(&quot;Blattodea&quot;, &quot;Tricladida&quot;)</code></pre>
+decreasers = c(&#39;Blattodea&#39;, &#39;Tricladida&#39;)</code></pre>
 <p>Generate matrix of effect sizes based on effect size of interest.</p>
 <pre class="r"><code>effect_mat = effect_alt(fit_reveg, effect_size=5, increasers, decreasers, term=&#39;treatment&#39;)</code></pre>
 <p>Finally, we specify the <code>object0</code> argument to perform the test.</p>
 <pre class="r"><code>equivtest(fit_reveg.cord, effect_mat, object0=fit0.cord)</code></pre>
-<pre><code>## Time elapsed: 0 hr 0 min 27 sec</code></pre>
+<pre><code>## Time elapsed: 0 hr 0 min 29 sec</code></pre>
 <pre><code>## Equivalence Test Table
 ## 
 ## object0: abund ~ 1 + offset(log(pitfalls))
@@ -633,7 +634,7 @@ decreasers = c(&quot;Blattodea&quot;, &quot;Tricladida&quot;)</code></pre>
 ## Multivariate test:
 ##         Res.Df Df.diff   Dev Pr(&gt;Dev)
 ## object0      9                       
-## object       8       1 78.25    0.635
+## object       8       1 78.25    0.641
 ## Arguments:
 ##  Test statistics calculated assuming uncorrelated response (for faster computation) 
 ## P-value calculated using 999 Monte Carlo samples from a factor analytic Gaussian copula 
@@ -644,7 +645,7 @@ decreasers = c(&quot;Blattodea&quot;, &quot;Tricladida&quot;)</code></pre>
 <h2>TL;DR (show me the code)</h2>
 <pre class="r"><code># Install required packages from CRAN and GitHub.
 install.packages(c(&#39;TOSTER&#39;, &#39;ecoCopula&#39;, &#39;mvabund&#39;, &#39;devtools&#39;, &#39;psych&#39;))
-devtools::install_github(&#39;lsjmichelle/ecopower@3803ec5&#39;)
+devtools::install_github(&#39;lsjmichelle/ecopower@1e5d39a&#39;)
 devtools::install_github(&#39;dwarton/ecostats&#39;)
 
 # Load packages
@@ -712,13 +713,14 @@ fit.cord = cord(fit)
 
 # Specify the increasers and decreasers
 increasers = c(
-  &#39;Acanthurus.nigrofuscus&#39;, &#39;Chromis.hypsilepis&#39;, &#39;Parma.microlepis&#39;,
-  &#39;Pempheris.compressa&#39;, &#39;Scorpis.lineolatus&#39;, &#39;Trachinops.taeniatus&#39;
+  &#39;Abudefduf.sp.&#39;, &#39;Acanthurus.nigrofuscus&#39;, &#39;Chromis.hypsilepis&#39;,
+  &#39;Parma.microlepis&#39;, &#39;Pempheris.compressa&#39;, &#39;Scorpis.lineolatus&#39;,
+  &#39;Trachinops.taeniatus&#39;
 )
 
 decreasers = c(
   &#39;Aplodactylus.lophodon&#39;, &#39;Atypichthys.strigatus&#39;, &#39;Cheilodactylus.fuscus&#39;,
-  &#39;Pictilabrus.laticlavius&#39;
+  &#39;Olisthops.cyanomelas&#39;, &#39;Pictilabrus.laticlavius&#39;
 )
 
 # Generate matrix of effect sizes based on effect size of interest
@@ -746,13 +748,13 @@ fit_reveg.cord = cord(fit_reveg)
 
 # Specify the increasers and decreasers
 increasers = c(
-  &quot;Acarina&quot;, &quot;Amphipoda&quot;, &quot;Araneae&quot;,
-  &quot;Coleoptera&quot;, &quot;Collembola&quot;,
-  &quot;Haplotaxida&quot;, &quot;Hemiptera&quot;, &quot;Hymenoptera&quot;,
-  &quot;Isopoda&quot;
+  &#39;Acarina&#39;, &#39;Amphipoda&#39;, &#39;Araneae&#39;,
+  &#39;Coleoptera&#39;, &#39;Collembola&#39;,
+  &#39;Haplotaxida&#39;, &#39;Hemiptera&#39;, &#39;Hymenoptera&#39;,
+  &#39;Isopoda&#39;
 )
 
-decreasers = c(&quot;Blattodea&quot;, &quot;Tricladida&quot;)
+decreasers = c(&#39;Blattodea&#39;, &#39;Tricladida&#39;)
 
 # Generate matrix of effect sizes based on effect size of interest
 effect_mat = effect_alt(fit_reveg, effect_size=5, increasers, decreasers, term=&#39;treatment&#39;)

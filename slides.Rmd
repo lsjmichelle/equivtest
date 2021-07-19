@@ -130,7 +130,7 @@ knitr::include_graphics(here('images', 'map.png'))
 Install packages
 ```{r, echo=TRUE, eval=FALSE}
 install.packages(c('TOSTER', 'ecoCopula', 'mvabund', 'devtools'))
-devtools::install_github('lsjmichelle/ecopower@3803ec5')
+devtools::install_github('lsjmichelle/ecopower@1e5d39a')
 ```
 
 Load package
@@ -247,34 +247,35 @@ How do we decide what effect size to use for each species?
 <div class="incremental">
 ```{r, out.width='70%'}
 increasers = c(
-  'Acanthurus.nigrofuscus', 'Chromis.hypsilepis', 'Parma.microlepis',
-  'Pempheris.compressa', 'Scorpis.lineolatus', 'Trachinops.taeniatus'
+  'Abudefduf.sp.', 'Acanthurus.nigrofuscus', 'Chromis.hypsilepis',
+  'Parma.microlepis', 'Pempheris.compressa', 'Scorpis.lineolatus',
+  'Trachinops.taeniatus'
 )
 
 decreasers = c(
   'Aplodactylus.lophodon', 'Atypichthys.strigatus', 'Cheilodactylus.fuscus',
-  'Pictilabrus.laticlavius'
+  'Olisthops.cyanomelas', 'Pictilabrus.laticlavius'
 )
 
-fish = data.frame(matrix(nrow=2,ncol=20,dimnames = list(NULL, colnames(abund))))
+fish = data.frame(matrix(nrow=2,ncol=34,dimnames = list(NULL, colnames(abund))))
 fish[1:2,] = 1
 fish[2, increasers] = 1.5
 fish[2, decreasers] = 1/1.5
 
 plot(
-  1:20, fish[1,],
+  1:34, fish[1,],
   type="l", ylim=c(0.6,1.6),
   ylab="Proportion of mean abundances",
   xlab = "", xaxt='n', col='blue',
   main="Mean abundance proportions in restored sites relative to reference sites\nfor a specified effect size of 1.5"
 )
-lines(1:20, fish[2,], col='red',type='o')
+lines(1:34, fish[2,], col='red',type='o')
 legend(
-  "bottom", legend=c("Reference", "Restored"), lty=c(1,1), title="", lwd = 1,
+  "bottomright", legend=c("Ref", "Rest"), lty=c(1,1), title="", lwd = 1,
   col=c("blue","red"), inset=0.01, box.lty = 0, y.intersp = 0.8, cex=0.8
 )
 text(
-  1:20,
+  1:34,
   par("usr")[3]-0.01,
   srt = 50,
   adj = 1,
@@ -307,13 +308,14 @@ fit.cord = cord(fit)
 ## Multivariate equivalence testing | Specifying the effect
 ```{r, echo=TRUE}
 increasers = c(
-  'Acanthurus.nigrofuscus', 'Chromis.hypsilepis', 'Parma.microlepis',
-  'Pempheris.compressa', 'Scorpis.lineolatus', 'Trachinops.taeniatus'
+  'Abudefduf.sp.', 'Acanthurus.nigrofuscus', 'Chromis.hypsilepis',
+  'Parma.microlepis', 'Pempheris.compressa', 'Scorpis.lineolatus',
+  'Trachinops.taeniatus'
 )
 
 decreasers = c(
   'Aplodactylus.lophodon', 'Atypichthys.strigatus', 'Cheilodactylus.fuscus',
-  'Pictilabrus.laticlavius'
+  'Olisthops.cyanomelas', 'Pictilabrus.laticlavius'
 )
 
 effect_mat = effect_alt(fit, effect_size=1.5, increasers, decreasers, term='treatment')
@@ -337,7 +339,7 @@ equivtest(fit.cord, coeffs=effect_mat)
 <div class="incremental">
 - Try `equivtest` in `ecopower` on GitHub for multivariate abundances
 ```{r, echo=TRUE, eval=FALSE}
-devtools::install_github('lsjmichelle/ecopower@3803ec5')
+devtools::install_github('lsjmichelle/ecopower@1e5d39a')
 ```
 </div>
 <div class="incremental">

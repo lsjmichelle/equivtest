@@ -27,7 +27,7 @@ Install required packages from CRAN and GitHub.
 
 ```{r, eval=FALSE}
 install.packages(c('TOSTER', 'ecoCopula', 'mvabund', 'devtools', 'psych'))
-devtools::install_github('lsjmichelle/ecopower@3803ec5')
+devtools::install_github('lsjmichelle/ecopower@1e5d39a')
 devtools::install_github('dwarton/ecostats')
 ```
 
@@ -42,7 +42,7 @@ library(mvabund)
 ### Load data
 
 The `crayweed` dataset was collected over a period of seven time points and
-contains the counts of 20 fish species at 27 sites - 16 reference sites and
+contains the counts of 34 fish species at 27 sites - 16 reference sites and
 11 restored sites.
 
 ```{r}
@@ -147,13 +147,14 @@ fit.cord = cord(fit)
 Specify the increasers and decreasers.
 ```{r}
 increasers = c(
-  'Acanthurus.nigrofuscus', 'Chromis.hypsilepis', 'Parma.microlepis',
-  'Pempheris.compressa', 'Scorpis.lineolatus', 'Trachinops.taeniatus'
+  'Abudefduf.sp.', 'Acanthurus.nigrofuscus', 'Chromis.hypsilepis',
+  'Parma.microlepis', 'Pempheris.compressa', 'Scorpis.lineolatus',
+  'Trachinops.taeniatus'
 )
 
 decreasers = c(
   'Aplodactylus.lophodon', 'Atypichthys.strigatus', 'Cheilodactylus.fuscus',
-  'Pictilabrus.laticlavius'
+  'Olisthops.cyanomelas', 'Pictilabrus.laticlavius'
 )
 ```
 
@@ -207,13 +208,13 @@ fit_reveg.cord = cord(fit_reveg)
 Specify the increasers and decreasers.
 ```{r}
 increasers = c(
-  "Acarina", "Amphipoda", "Araneae",
-  "Coleoptera", "Collembola",
-  "Haplotaxida", "Hemiptera", "Hymenoptera",
-  "Isopoda"
+  'Acarina', 'Amphipoda', 'Araneae',
+  'Coleoptera', 'Collembola',
+  'Haplotaxida', 'Hemiptera', 'Hymenoptera',
+  'Isopoda'
 )
 
-decreasers = c("Blattodea", "Tricladida")
+decreasers = c('Blattodea', 'Tricladida')
 ```
 
 Generate matrix of effect sizes based on effect size of interest.
@@ -230,7 +231,7 @@ equivtest(fit_reveg.cord, effect_mat, object0=fit0.cord)
 ```{r, eval=FALSE}
 # Install required packages from CRAN and GitHub.
 install.packages(c('TOSTER', 'ecoCopula', 'mvabund', 'devtools', 'psych'))
-devtools::install_github('lsjmichelle/ecopower@3803ec5')
+devtools::install_github('lsjmichelle/ecopower@1e5d39a')
 devtools::install_github('dwarton/ecostats')
 
 # Load packages
@@ -298,13 +299,14 @@ fit.cord = cord(fit)
 
 # Specify the increasers and decreasers
 increasers = c(
-  'Acanthurus.nigrofuscus', 'Chromis.hypsilepis', 'Parma.microlepis',
-  'Pempheris.compressa', 'Scorpis.lineolatus', 'Trachinops.taeniatus'
+  'Abudefduf.sp.', 'Acanthurus.nigrofuscus', 'Chromis.hypsilepis',
+  'Parma.microlepis', 'Pempheris.compressa', 'Scorpis.lineolatus',
+  'Trachinops.taeniatus'
 )
 
 decreasers = c(
   'Aplodactylus.lophodon', 'Atypichthys.strigatus', 'Cheilodactylus.fuscus',
-  'Pictilabrus.laticlavius'
+  'Olisthops.cyanomelas', 'Pictilabrus.laticlavius'
 )
 
 # Generate matrix of effect sizes based on effect size of interest
@@ -332,13 +334,13 @@ fit_reveg.cord = cord(fit_reveg)
 
 # Specify the increasers and decreasers
 increasers = c(
-  "Acarina", "Amphipoda", "Araneae",
-  "Coleoptera", "Collembola",
-  "Haplotaxida", "Hemiptera", "Hymenoptera",
-  "Isopoda"
+  'Acarina', 'Amphipoda', 'Araneae',
+  'Coleoptera', 'Collembola',
+  'Haplotaxida', 'Hemiptera', 'Hymenoptera',
+  'Isopoda'
 )
 
-decreasers = c("Blattodea", "Tricladida")
+decreasers = c('Blattodea', 'Tricladida')
 
 # Generate matrix of effect sizes based on effect size of interest
 effect_mat = effect_alt(fit_reveg, effect_size=5, increasers, decreasers, term='treatment')
